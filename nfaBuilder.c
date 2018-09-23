@@ -16,14 +16,6 @@ struct nFA* build_nfa_from_char(int symbol){
   tempFA->final_state = destination;
 
   struct transition_node* tempL = list_init(origin, destination, symbol);
- 
-  // Placehold solution to not printing out a blank final state when it has no exit transitions 
-  //struct transition_node* nil_transition = malloc(sizeof(struct transition_node));
-  //nil_transition->origin_state = destination;
-  //nil_transition->destination_state = -1;
-  //nil_transition->symbol = 'E';
-  //nil_transition->next_transition = NULL;
-  //tempL->next_transition = nil_transition;
 
   tempFA->trans_list = tempL;
  
