@@ -67,6 +67,8 @@ void modify_nfa_union(struct nFA* NFA1, struct nFA* NFA2){
 
   NFA1->start_state = new_start_state;  
   NFA1->final_state = new_final_state;
+
+  free(NFA2);
 }
 
 
