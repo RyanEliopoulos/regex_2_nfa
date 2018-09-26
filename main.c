@@ -26,7 +26,9 @@ void print_transitions(struct nFA* NFA){
   int latest_node_with_exit_arrows = 0; // Used to determine if manual printing of the accept state is necessary
 
   while(temp != NULL){
-    if(temp->origin_state > latest_node_with_exit_arrows){
+
+    // This helps solve the problem of listing a final state that has no exit arrows
+    if(temp->origin_state > latest_node_with_exit_arrows){ 
       latest_node_with_exit_arrows = temp->origin_state;
     }
 
