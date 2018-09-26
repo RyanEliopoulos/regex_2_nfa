@@ -45,6 +45,12 @@ struct stack_node* pop(struct stack_node* sentinel);
 int push(struct stack_node* sentinel, struct nFA* pushed_nfa);
 struct stack_node* stack_init();
 
+
+//########################################//
+//              core.c                    //
+//******************************************
+void build_nfa(struct stack_node* sentinel);
+
 //######################################//
 //            main.c                    //
 //**************************************//

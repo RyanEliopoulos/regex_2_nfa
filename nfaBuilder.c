@@ -34,7 +34,7 @@ void modify_nfa_union(struct nFA* NFA1, struct nFA* NFA2){
   struct transition_node* temp = malloc(sizeof(struct transition_node));
   temp->origin_state = NFA1->final_state;
   temp->destination_state = new_final_state;
-  temp->symbol = 6;
+  temp->symbol = 'E';
   temp->next_transition = NULL;
   join_transition_list(NFA1->trans_list, temp);
   
@@ -42,7 +42,7 @@ void modify_nfa_union(struct nFA* NFA1, struct nFA* NFA2){
   struct transition_node* temp2 = malloc(sizeof(struct transition_node));
   temp2->origin_state = NFA2->final_state;
   temp2->destination_state = new_final_state;
-  temp2->symbol = 6;
+  temp2->symbol = 'E';
   temp2->next_transition = NULL;
   join_transition_list(NFA2->trans_list, temp2);
 
@@ -55,7 +55,7 @@ void modify_nfa_union(struct nFA* NFA1, struct nFA* NFA2){
   struct transition_node* new_transition1 = malloc(sizeof(struct transition_node));
   new_transition1->origin_state = new_start_state;
   new_transition1->destination_state = NFA1->start_state;
-  new_transition1->symbol = 6;
+  new_transition1->symbol = 'E';
   new_transition1->next_transition = NULL; 
   join_transition_list(NFA1->trans_list, new_transition1);
 
@@ -63,7 +63,7 @@ void modify_nfa_union(struct nFA* NFA1, struct nFA* NFA2){
   struct transition_node* new_transition2 = malloc(sizeof(struct transition_node));
   new_transition2->origin_state = new_start_state;
   new_transition2->destination_state = NFA2->start_state;
-  new_transition2->symbol = 6;
+  new_transition2->symbol = 'E';
   new_transition2->next_transition = NULL; 
   join_transition_list(NFA1->trans_list, new_transition2);
 
@@ -80,7 +80,7 @@ void modify_nfa_concatenation(struct nFA* NFA1, struct nFA* NFA2){
   struct transition_node* temp = malloc(sizeof(struct transition_node));
   temp->origin_state = NFA1->final_state;
   temp->destination_state = NFA2->start_state;
-  temp->symbol = 6;
+  temp->symbol = 'E';
   temp->next_transition = NULL;   
   
   // Appending the new transition
@@ -112,14 +112,14 @@ void modify_nfa_kleene_star(struct nFA* target_nfa){
   struct transition_node* new_state_trans = malloc(sizeof(struct transition_node*));
   new_state_trans->origin_state = new_state;
   new_state_trans->destination_state = target_nfa->start_state;
-  new_state_trans->symbol = 6;
+  new_state_trans->symbol = 'E';
   new_state_trans->next_transition = NULL; 
 
   // Create transition from old accept state to new state
   struct transition_node* to_new = malloc(sizeof(struct transition_node));
   to_new->origin_state = target_nfa->final_state;
   to_new->destination_state = new_state;
-  to_new->symbol = 6;
+  to_new->symbol = 'E';
   to_new->next_transition = new_state_trans;
 
   join_transition_list(target_nfa->trans_list, to_new); // append latest transitions
