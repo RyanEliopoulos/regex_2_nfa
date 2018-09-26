@@ -80,7 +80,7 @@ int push(struct stack_node* sentinel, struct nFA* pushed_nfa){
 
 
 // Creates the sentinel node for a stack. Returns struct stackNode pointer.
-struct stack_node* stackInit(){
+struct stack_node* stack_init(){
 
 	struct stack_node* sentinel = malloc(sizeof(struct stack_node));
 

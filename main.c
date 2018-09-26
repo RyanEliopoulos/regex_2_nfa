@@ -12,10 +12,42 @@ void main(){
   modify_nfa_kleene_star(test);
   printf("\n\n\nUnion\n\n\n");
 
-  // gonna try union now
+  //gonna try union now
   struct nFA* test3 = build_nfa_from_char(3);
   modify_nfa_union(test, test3);
   print_transitions(test);
+
+
+
+  // Begins the stack testing
+  struct stack_node* sentinel = stack_init();
+  push(sentinel, build_nfa_from_char(1));
+
+  // Apply operation first kleene star
+  struct nFA* stack_test = pop(sentinel)->nfa;
+  modify_nfa_kleene_star(stack_test);
+  push(sentinel, stack_test); // Replace 
+
+  push(sentinel, build_nfa_from_char(4)); 
+
+  // Concatenation step
+  struct nFA* stack_test2 = pop(sentinel)->nfa;
+  stack_test = pop(sentinel)->nfa;
+  modify_nfa_concatenation(stack_test, stack_test2);
+  push(sentinel, stack_test); // Replace
+
+  // second kleene star
+  stack_test = pop(sentinel)->nfa;
+  modify_nfa_kleene_star(stack_test);
+  push(sentinel, stack_test);
+
+  // Union
+  push(sentinel, build_nfa_from_char(3));
+  struct nFA* stack_test3 = pop(sentinel)->nfa;
+  stack_test = pop(sentinel)->nfa;
+  modify_nfa_union(stack_test, stack_test3); 
+ 
+  print_transitions(stack_test);  
 }
 
 

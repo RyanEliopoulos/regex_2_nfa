@@ -23,6 +23,8 @@ struct nFA* build_nfa_from_char(int symbol){
 }
 
 
+// Appends transition list from NFA2 onto NFA1. Frees NFA2
+// Adds new start and final states
 void modify_nfa_union(struct nFA* NFA1, struct nFA* NFA2){
 
   int new_start_state = counter++;
@@ -71,11 +73,7 @@ void modify_nfa_union(struct nFA* NFA1, struct nFA* NFA2){
   free(NFA2);
 }
 
-
-
-
-
-// Cats NFA2 onto NFA1 following standard automata protocol
+// Cats NFA2 onto NFA1 following standard automata protocol, then frees NFA2
 void modify_nfa_concatenation(struct nFA* NFA1, struct nFA* NFA2){
 
   // Add E slide that combines the two NFAs
@@ -101,10 +99,6 @@ void modify_nfa_concatenation(struct nFA* NFA1, struct nFA* NFA2){
   free(NFA2);
 
 }
-
-
-
-
 
 
 /* Modifies the given NFA by creating a new state, which becomes both the accept state and the start state. This new state
@@ -136,7 +130,7 @@ void modify_nfa_kleene_star(struct nFA* target_nfa){
 }
 
 
-// Still need to test this against larger NFAs. So far it works with kleene star
+// helper routine for maintaining transition lists when new NFAs are created
 void join_transition_list(struct transition_node* older_list, struct transition_node* latest_list){
 
   // Finding last transition

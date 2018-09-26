@@ -43,6 +43,7 @@ struct transition_node* list_init(int origin, int destination, int symbol);
 
 struct stack_node* pop(struct stack_node* sentinel);
 int push(struct stack_node* sentinel, struct nFA* pushed_nfa);
+struct stack_node* stack_init();
 
 //######################################//
 //            main.c                    //
