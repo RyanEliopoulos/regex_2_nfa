@@ -54,5 +54,6 @@ void build_nfa(struct stack_node* sentinel);
 //######################################//
 //            main.c                    //
 //**************************************//
-void print_transitions(struct nFA* NFA);
+void print_transitions(struct nFA*);
+void print_transitions_one_line(struct nFA*);
 

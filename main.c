@@ -8,7 +8,72 @@ void main(){
 
  struct nFA* finished_nfa = pop(sentinel)->nfa;
 
- print_transitions(finished_nfa);
+ print_transitions_one_line(finished_nfa);
+}
+
+
+void print_transitions_one_line(struct nFA* NFA){
+
+  struct transition_node* temp = NFA->trans_list;
+  int state_marker = -1; //Helps print all transitions on one line
+  int latest_node_with_exit_arrows = 0; // Used to determine if manual printing of the accept state is necessary
+  
+  while(temp != NULL){
+     
+    if(state_marker != temp->origin_state){
+      state_marker = temp->origin_state;
+      printf("\n");  
+
+      if(temp->origin_state == NFA->final_state && temp->origin_state == NFA->start_state){
+        printf("S,F(q%d,%c)-> q%d", temp->origin_state, temp->symbol, temp->destination_state);
+      }
+      else if(temp->origin_state == NFA->start_state){
+        printf("S(q%d,%c)-> q%d", temp->origin_state, temp->symbol, temp->destination_state);
+      }
+      else if(temp->origin_state == NFA->final_state){
+        printf("F(q%d,%c)-> q%d", temp->origin_state, temp->symbol, temp->destination_state);
+      }
+      else{
+        printf("(q%d,%c)-> q%d", temp->origin_state, temp->symbol, temp->destination_state);
+      }
+    } 
+    else{
+      printf(",%d", temp->destination_state);
+    }
+    temp = temp->next_transition;
+  }
+//    // Tracks state change
+//    if(state_marker != temp->origin_state){
+//      state_marker = temp->origin_state;
+//      printf("\n");
+//    } 
+//
+//    // Used for manual accept state transition printing
+//    if(temp->origin_state > latest_node_with_exit_arrows){ 
+//      latest_node_with_exit_arrows = temp->origin_state;
+//    }
+//
+//
+//    // Primary printing mechanism
+//    if(temp->origin_state == NFA->final_state && temp->origin_state == NFA->start_state){
+//      printf("S,F(q%d,%c)-> q%d", temp->origin_state, temp->symbol, temp->destination_state);
+//    }
+//    else if(temp->origin_state == NFA->start_state){
+//      printf("S(q%d,%c)-> q%d", temp->origin_state, temp->symbol, temp->destination_state);
+//    }
+//    else if(temp->origin_state == NFA->final_state){
+//      printf("F(q%d,%c)-> q%d", temp->origin_state, temp->symbol, temp->destination_state);
+//    }
+//   else{
+//      printf("(q%d,%c)-> q%d", temp->origin_state, temp->symbol, temp->destination_state);
+//    }
+//
+//    temp = temp->next_transition;
+//  }
+//  
+  if(NFA->final_state > latest_node_with_exit_arrows){
+    printf("\nF(q%d,E)->\n", NFA->final_state);
+  }
 }
 
 
