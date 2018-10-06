@@ -5,6 +5,10 @@ int counter = 0; // Tracks next available state identifier
 
 
 // Builds an NFA containing a single symbol and two states.
+// NFAs are comprised of:
+//  - A start state
+//  - A final state
+//  - and a linked list of transitions that connect the nodes of the NFA
 struct nFA* build_nfa_from_char(int symbol){
 
   struct nFA* tempFA = malloc(sizeof(struct nFA));
@@ -16,7 +20,6 @@ struct nFA* build_nfa_from_char(int symbol){
   tempFA->final_state = destination;
 
   struct transition_node* tempL = list_init(origin, destination, symbol);
-
   tempFA->trans_list = tempL;
  
   return tempFA; 
@@ -130,7 +133,7 @@ void modify_nfa_kleene_star(struct nFA* target_nfa){
 }
 
 
-// helper routine for maintaining transition lists when new NFAs are created
+// helper routine for maintaining transition lists when new NFAs are created. Extends older_list with latest_list
 void join_transition_list(struct transition_node* older_list, struct transition_node* latest_list){
 
   // Finding last transition
