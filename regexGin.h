@@ -1,6 +1,6 @@
 #include<stdio.h>
 #include<stdlib.h>
-
+#include<ctype.h>
 
 //####################################//
 //           Structs                  // 
@@ -40,20 +40,27 @@ struct transition_node* list_init(int origin, int destination, int symbol);
 //######################################//
 //                stack.c               //
 //**************************************//
-
-struct stack_node* pop(struct stack_node* sentinel);
+struct nFA* pop(struct stack_node* sentinel);
 int push(struct stack_node* sentinel, struct nFA* pushed_nfa);
 struct stack_node* stack_init();
-
+void free_stack(struct stack_node*);
 
 //########################################//
 //              core.c                    //
 //******************************************
 void build_nfa(struct stack_node* sentinel);
+int empty_stack_check(int, struct nFA*, struct nFA*);
+void zero_index_operator();
+void ending_stack_check(struct stack_node*);
 
 //######################################//
 //            main.c                    //
 //**************************************//
 void print_transitions(struct nFA*);
+
+//######################################//
+//          ancillary.c                 //
+//**************************************//
+void free_nfa(struct nFA*);
 void print_transitions_one_line(struct nFA*);
 

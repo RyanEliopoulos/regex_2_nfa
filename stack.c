@@ -2,17 +2,19 @@
 #include"regexGin.h"
 
 // Returns NULL if the stack is empty. Otherwise returns the NFA off the top
-struct stack_node* pop(struct stack_node* sentinel){
+struct nFA* pop(struct stack_node* sentinel){
 
   if(sentinel->next == NULL){ // Stack is empty
     return NULL;
   }
-
+  
+  // Modifies stack and retrieves nfa
 	struct stack_node* popped_node =	sentinel->next;	
-
 	sentinel->next = popped_node->next; // Removes popped node from the chain
-  return popped_node;
+  struct nFA* popped_nfa = popped_node->nfa;
+  free(popped_node);
 
+  return popped_nfa;
 }
 
 // Adds given number to the stack. Returns 1 if successful and 0 if malloc fails (out of memory)
@@ -24,7 +26,9 @@ int push(struct stack_node* sentinel, struct nFA* pushed_nfa){
 
 	// Returns 0 when malloc fails to allocate requested memory
 	if(temp == NULL){
-		return 0;
+    printf("System has run out of memory..terminating\n");
+    free_stack(sentinel);
+    exit(4);
 	}
 
 	// Inserts the new link into the chain
@@ -35,63 +39,52 @@ int push(struct stack_node* sentinel, struct nFA* pushed_nfa){
 	return 1;
 }
 
-// Iterates through the given list and frees each node as it goes
-//void releaseStack(struct stackNode* sentinel){
-//
-//	// Placeholders used for list traversal
-//	struct stackNode *previousNode = sentinel;
-//	struct stackNode *currentNode = sentinel->next;
-//
-//	// Iterates through the list releasing each node as it goes, releasing n-1 nodes
-//	while(currentNode != NULL){
-//		free(previousNode);
-//		previousNode = currentNode;
-//		currentNode = currentNode->next;
-//	
-//	
-//	}
-//	// Releases final node	
-//	free(previousNode);
-//
-//}
-//
-//// Traverses the given list, printing each node value as it goes
-//void print_stack(struct stackNode* sentinel){
-//
-//	struct stackNode* currentNode = sentinel->next;
-//
-//	// Detects empty stack
-//	if(currentNode == NULL){
-//		printf("TOS->\n");
-//		return;
-//	}
-//
-//	printf("TOS->");
-//	
-//	// Iterates through the stack up to n-1 and prints the data values
-//	while(currentNode->next !=  NULL){
-//		printf("%d, ", currentNode->data);
-//		currentNode = currentNode->next;	
-//	}				
-//
-//	printf("%d\n", currentNode->data); // Prints last node. Separate to preserve proper comma usage
-//}
 
-
-
-// Creates the sentinel node for a stack. Returns struct stackNode pointer.
+// Creates the sentinel node for a stack.
 struct stack_node* stack_init(){
 
 	struct stack_node* sentinel = malloc(sizeof(struct stack_node));
+
+  if(sentinel == NULL){
+    printf("Insufficient memory to execute program..terminating\n");
+    exit(4);
+  }
 
   // For debugging/referencing
   struct nFA* temp = malloc(sizeof(struct nFA));
   temp->start_state = -9999;
   temp->final_state = -9999;
+  int origin = -9999;
+  int destination = -9999;
+  char symbol = 'E';
+  
+  // Necessary for free-ing functions
+  struct transition_node* tempL = list_init(origin, destination, symbol);
+  temp->trans_list = tempL;
 
 	sentinel->nfa = temp;
 	sentinel->next = NULL;
 
 	return sentinel;
-
 }
+
+void free_stack(struct stack_node* sentinel){
+
+  // To traverse the stack
+  struct stack_node* current_node = sentinel;
+  struct stack_node* next_node = sentinel->next;
+
+  // Traversing the stack and free the node's NFAs
+  while(next_node != NULL){
+    free_nfa(current_node->nfa);
+    free(current_node);
+    current_node = next_node;
+    next_node = next_node->next;
+  }
+
+  free_nfa(current_node->nfa);
+  free(current_node);
+}
+
+
+

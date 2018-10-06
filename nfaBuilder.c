@@ -109,7 +109,7 @@ void modify_nfa_kleene_star(struct nFA* target_nfa){
   int new_state = counter++;
   
   // Create transition from the new state 
-  struct transition_node* new_state_trans = malloc(sizeof(struct transition_node*));
+  struct transition_node* new_state_trans = malloc(sizeof(struct transition_node));
   new_state_trans->origin_state = new_state;
   new_state_trans->destination_state = target_nfa->start_state;
   new_state_trans->symbol = 'E';
@@ -152,7 +152,4 @@ struct transition_node* list_init(int origin, int destination, int symbol){
   temp->symbol = symbol;
   temp->next_transition = NULL;
 }
-
-
-
 
