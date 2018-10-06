@@ -1,3 +1,9 @@
+/*
+ * Ryan Paulos
+ *
+ *
+ */
+
 #include"regexGin.h"
 
 // Core logic of the program. Parses chars from stdin and manipulates stack/NFA calls as required.

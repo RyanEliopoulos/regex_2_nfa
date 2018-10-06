@@ -1,3 +1,9 @@
+/*
+ * Ryan Paulos
+ *
+ *
+ */
+
 #include"regexGin.h"
 
 
@@ -19,6 +25,8 @@ void free_nfa(struct nFA* nfa){
 }
 
 
+// Responsible for printing the transition functions
+// Annoyingly long name because the old print_transitions function didn't (one_line).
 void print_transitions_one_line(struct nFA* NFA){
 
   struct transition_node* temp = NFA->trans_list;

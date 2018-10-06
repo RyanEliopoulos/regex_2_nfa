@@ -1,3 +1,10 @@
+/*
+ * Ryan Paulos
+ *
+ *
+ */
+
+
 #include"regexGin.h"
 
 // As it says

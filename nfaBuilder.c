@@ -1,3 +1,9 @@
+/*
+ * Ryan Paulos
+ *
+ *
+ */
+
 #include"regexGin.h"
 
 int counter = 0; // Tracks next available state identifier

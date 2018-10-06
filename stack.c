@@ -1,3 +1,10 @@
+/*
+ * Ryan Paulos
+ *
+ *
+ */
+
+
 #include<stdlib.h>
 #include"regexGin.h"
 
@@ -17,9 +24,10 @@ struct nFA* pop(struct stack_node* sentinel){
   return popped_nfa;
 }
 
-// Adds given number to the stack. Returns 1 if successful and 0 if malloc fails (out of memory)
-// New nodes are inserted at the front of the list, pointed to by the sentinel, and point to the node direct beneath them in the stack.
-// Fnx takes pointer to the stack sentinel and the number to be inserted.
+
+// Sentinel points to the top of the stack. 
+//  - Terminates program if malloc fails
+//  - returns 1 upon success
 int push(struct stack_node* sentinel, struct nFA* pushed_nfa){
 
 	struct stack_node* temp = malloc(sizeof(struct stack_node));
@@ -40,7 +48,7 @@ int push(struct stack_node* sentinel, struct nFA* pushed_nfa){
 }
 
 
-// Creates the sentinel node for a stack.
+// Creates the sentinel node for a stack. Sentinel comes with an NFA to faciltate the free_stack function
 struct stack_node* stack_init(){
 
 	struct stack_node* sentinel = malloc(sizeof(struct stack_node));
@@ -68,6 +76,8 @@ struct stack_node* stack_init(){
 	return sentinel;
 }
 
+
+// Frees all allocated memory from the program. Traverses the stack, freeing stack nodes and their 'children' structs 
 void free_stack(struct stack_node* sentinel){
 
   // To traverse the stack
