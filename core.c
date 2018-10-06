@@ -1,6 +1,9 @@
 #include"regexGin.h"
 
-// Core logic of the program. Parses chars from stdin and manipulates stack/NFA calls as required
+// Core logic of the program. Parses chars from stdin and manipulates stack/NFA calls as required.
+// - Ignores whitespace characters
+// - Terminates program if a character not specified as a member of the alphabet or operators is passed
+// - Provides character # of invalid character (if one is detected)
 void build_nfa(struct stack_node* sentinel){
   
   char c = fgetc(stdin);
@@ -9,6 +12,8 @@ void build_nfa(struct stack_node* sentinel){
   while(c != EOF){
     
     // Note: USE SWITCH NEXT TIME
+
+    // Kleene Star
     if(c == '*'){
       if(input_char_count == 0){
         zero_index_operator();  
@@ -18,6 +23,8 @@ void build_nfa(struct stack_node* sentinel){
       modify_nfa_kleene_star(nfa);
       push(sentinel, nfa);
     } 
+
+    // Concatenation
     else if(c == '&'){
       if(input_char_count == 0){
         zero_index_operator();
@@ -38,6 +45,8 @@ void build_nfa(struct stack_node* sentinel){
       // Push new NFA
       push(sentinel, nfa1);
     } 
+
+    // Union
     else if(c == '|'){
       if(input_char_count == 0){
         zero_index_operator();
@@ -59,14 +68,20 @@ void build_nfa(struct stack_node* sentinel){
       // push new nfa
       push(sentinel, nfa1);
     } 
+
+    // Building a new nfa
     else if(c == 'a' || c == 'b' || c == 'c' || c == 'd' || c == 'e'){
       struct nFA* new_nfa = build_nfa_from_char(c);
       push(sentinel, new_nfa); 
     }
+    
+    // Whitespace is ignored
     else if(isspace(c)){
       // Negate the tick that occurs later
       input_char_count--;
     }
+
+    // Invalid character detection
     else{
       printf("invalid character located at position %d\nTerminating\n", input_char_count);
       free_stack(sentinel);
@@ -79,7 +94,7 @@ void build_nfa(struct stack_node* sentinel){
   ending_stack_check(sentinel);
 }
 
-// If there is more than one NFA left on the stack. If so, the input was wrong (cuz it can't be me!!)
+// checks if there is more than one NFA left on the stack. If so, the input was wrong (cuz it can't be me!!)
 void ending_stack_check(struct stack_node* sentinel){
 
   int node_count = 0;
@@ -108,7 +123,6 @@ int empty_stack_check(int input_char_number, struct nFA* last_nfa, struct nFA* a
     free_nfa(almost_last_nfa);
     return 0;
   } 
-
   return 1;
 }
 
