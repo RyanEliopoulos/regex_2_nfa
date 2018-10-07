@@ -124,7 +124,7 @@ void ending_stack_check(struct stack_node* sentinel){
 // Detects popping from an empty stack, which is really just malformed input data
 int empty_stack_check(int input_char_number, struct nFA* last_nfa, struct nFA* almost_last_nfa){
   if(last_nfa == NULL){
-    printf("Popping from empty stack at input character %d\n", input_char_number+1);
+    printf("Popping from empty stack at input character %d\n", input_char_number+2);
     printf("Terminating\n");
     free_nfa(almost_last_nfa);
     return 0;
