@@ -1,8 +1,19 @@
 /*
  * Ryan Paulos
+ * CS 317
+ * 10/6/2018
+ *
+ *
+ * This program readis from stdin a series of characters representing the alphabet of a finate automaton (a,b,c,d,e) and 
+ * the characters representing regular expression operations (concatenation: &, kleene star: *, union: |), creating a 
+ * corresponding NFA.
+ *
+ * Parsing and error checking exists to make sure the expression is complete. The NFA is constructed piecemeal using a stack
+ * which builds smaller NFAs into larger ones until only one remains on the stack.
  *
  *
  */
+
 
 
 #include"regexGin.h"
