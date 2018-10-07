@@ -11,7 +11,7 @@
  * Parsing and error checking exists to make sure the expression is complete. The NFA is constructed piecemeal using a stack
  * which builds smaller NFAs into larger ones until only one remains on the stack.
  *
- *
+ * The program prints the transition functions for each node in the NFA before terminating.
  */
 
 
