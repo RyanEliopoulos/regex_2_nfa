@@ -19,7 +19,7 @@ The input must be in postfix notation.
 
 This is the NFA representation of a&b (a concatenated with b), presented in postfix notation as ab&.
 <br>
-S denotes the beginning state. F denotes the final state.  Input is fed through STDIN.
+S denotes the beginning state. F denotes the final state.
 <br>
 
 ![image](./screenshots/concat_example.png)
